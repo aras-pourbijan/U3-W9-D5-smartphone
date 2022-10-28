@@ -1,7 +1,3 @@
-document.addEventListener("DOMContentLoaded", () => {
-    let text = document.querySelector(".container p") as HTMLElement;
-});
-
 abstract class navigatore {
     protected marca: string;
     protected modello: string;
@@ -29,51 +25,74 @@ abstract class navigatore {
 
 abstract class cellulari extends navigatore {}
 
-class smartPhone extends cellulari {
-    scontoSullaChiamata: number;
+document.addEventListener("DOMContentLoaded", () => {
+    let page = document.querySelector(".container") as HTMLElement;
+    let display = <HTMLInputElement>page.querySelector(".display");
+    class smartPhone extends cellulari {
+        scontoSullaChiamata: number;
 
-    constructor(marca: string, modello: string, scontoSullaChiamata: number) {
-        super(marca, modello);
-        this.scontoSullaChiamata = scontoSullaChiamata;
-    }
+        constructor(marca: string, modello: string, scontoSullaChiamata: number) {
+            super(marca, modello);
+            this.scontoSullaChiamata = scontoSullaChiamata;
+        }
 
-    ricarica(e: number) {
-        this.credito += this.credito + e;
-        return console.log(`il tuo credito: ${this.credito}`);
-    }
+        ricarica(e: number) {
+            this.credito += this.credito + e;
+            return (display.textContent = `il tuo credito: ${this.credito}`);
+        }
 
-    chiamnata(m: number) {
-        if (this.credito >= 0.2) {
-            this.credito = this.credito - (m * this.costoChiamata * (100 - this.scontoSullaChiamata)) / 100;
-            this.minutiConsumati = this.minutiConsumati + m;
-        } else {
-            console.log("non hai creddito sufficente , fai una ricarica per chiamare!");
+        chiamnata(m: number) {
+            if (this.credito >= 0.2) {
+                this.credito = this.credito - (m * this.costoChiamata * (100 - this.scontoSullaChiamata)) / 100;
+                this.minutiConsumati = this.minutiConsumati + m;
+            } else {
+                display.textContent = "non hai creddito sufficente , fai una ricarica per chiamare!";
+            }
+        }
+
+        public numero404() {
+            this.credito < this.costoChiamata * 10
+                ? (display.textContent = `il tuo credito : ${this.credito} ma attenzione hai pocco  credito, ti conviene effettuare una ricarica!`)
+                : (display.textContent = `il tuo credito : ${this.credito}`);
+        }
+
+        getNumeroChiamate() {
+            return (display.textContent = `totale chiamate finora: ${this.minutiConsumati}`);
+        }
+
+        azzerraChiamate() {
+            this.minutiConsumati = 0;
+            return (display.textContent = "hai azzerato i minuti consumati!");
         }
     }
 
-    public numero404() {
-        this.credito < this.costoChiamata * 10
-            ? console.log(`il tuo credito : ${this.credito} ma attenzione hai pocco  credito, ti conviene effettuare una ricarica!`)
-            : console.log(`il tuo credito : ${this.credito}`);
+    let userbox = page.querySelector(".userbox");
+    let marca = page.querySelector(".userbox :nth-child(1)") as HTMLInputElement;
+    let modello = page.querySelector(".userbox :nth-child(2)") as HTMLInputElement;
+    let sconto = page.querySelector(".userbox :nth-child(3)") as HTMLInputElement;
+    let btn = document.querySelector(".userbox button") as HTMLButtonElement;
+    btn.addEventListener("click", addSmartphone);
+
+    let users: object[] = [];
+    function addSmartphone() {
+        users.push(new smartPhone(marca.value, modello.value, Number(sconto.value)));
+        console.log(users);
+        let userInfo = document.querySelector(".user-info") as HTMLElement;
+        userInfo.innerHTML = `questo utente ha un smartphone di marca ${marca.value} e modello ${modello.value} e puo ${sconto.value}avere  % di sconto ! `;
     }
 
-    getNumeroChiamate() {
-        return console.log(this.minutiConsumati);
-    }
+    let u1 = new smartPhone("samsung", "galaxy s22", 0);
+    let u2 = new smartPhone("apple", "iphone 14", 0);
+    let u3 = new smartPhone("xiaomi", "12 pro", 20);
 
-    azzerraChiamate() {
-        this.minutiConsumati = 0;
-        return console.log("hai azzerato i minuti consumati!");
-    }
-}
+    u1.ricarica(10);
+    u1.chiamnata(20);
+    u1.numero404();
 
-let u1 = new smartPhone("samsung", "galaxy s22", 0);
+    u1.chiamnata(14);
+    u1.getNumeroChiamate();
 
-u1.ricarica(10);
-u1.chiamnata(1);
-u1.numero404();
-u1.chiamnata(3);
-
-u1.chiamnata(14);
-u1.chiamnata(53);
-u1.chiamnata(2);
+    //     u1.chiamnata(53);
+    //     u1.chiamnata(2);
+    // })
+});
