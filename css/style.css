@@ -1,0 +1,23 @@
+* {
+    box-sizing: border-box;
+    margin: 0%;
+    padding: 0%;
+}
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+body {
+    font-size: 16px;
+    font-family: "Kreon", serif;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    padding: ;
+    background-color: rgb(75, 74, 72);
+    color: white;
+}
