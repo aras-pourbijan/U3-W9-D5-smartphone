@@ -78,21 +78,71 @@ document.addEventListener("DOMContentLoaded", () => {
         users.push(new smartPhone(marca.value, modello.value, Number(sconto.value)));
         console.log(users);
         let userInfo = document.querySelector(".user-info") as HTMLElement;
-        userInfo.innerHTML = `questo utente ha un smartphone di marca ${marca.value} e modello ${modello.value} e puo ${sconto.value}avere  % di sconto ! `;
+        userInfo.innerHTML = `questo utente ha un smartphone di marca ${marca.value} e modello ${modello.value} e puo ${sconto.value} avere  % di sconto ! `;
     }
 
-    let u1 = new smartPhone("samsung", "galaxy s22", 0);
+    let u1 = new smartPhone("samsung", "galaxy s22", 20);
     let u2 = new smartPhone("apple", "iphone 14", 0);
     let u3 = new smartPhone("xiaomi", "12 pro", 20);
 
-    u1.ricarica(10);
+    u1.ricarica(20);
     u1.chiamnata(20);
     u1.numero404();
 
-    u1.chiamnata(14);
-    u1.getNumeroChiamate();
+    u1.chiamnata(15);
+    // u1.getNumeroChiamate();
 
     //     u1.chiamnata(53);
     //     u1.chiamnata(2);
     // })
+
+    // ...     test of countDown      ...
+
+    // let countDownDate = new Date("nov 10, 2022 00:00:00").getTime();
+
+    // let x = setInterval(function () {
+    //     let now = new Date().getTime();
+
+    //     let distance = countDownDate - now;
+
+    //     let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    //     let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    //     let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    //     let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    //     let bt = document.querySelector(".birthday") as HTMLElement;
+    //     bt.innerHTML = days + " days " + hours + "h " + minutes + "m " + seconds + "s ";
+
+    //     if (distance < 0) {
+    //         clearInterval(x);
+    //         bt.innerHTML = "Happy birthday to me!";
+    //     }
+    // }, 1000);
+
+    // let btnTimer = document.querySelector("#timer");
+    // btnTimer.addEventListener("click", setTimeout(changebg, 4000));
+    // let changebg = function () {
+    //     let body = document.querySelector("body") as HTMLElement;
+    //     return (body.style.backgroundColor = "red");
+    // };
+
+    let callBtn = document.querySelector("#call") as HTMLButtonElement;
+    callBtn.addEventListener("click", start);
+
+    let stopBtn = document.querySelector("#stop") as HTMLButtonElement;
+    stopBtn.addEventListener("click", end);
+
+    let startTime: any;
+    let endTime: any;
+
+    function start() {
+        startTime = new Date();
+    }
+
+    function end() {
+        endTime = new Date();
+        let dif = endTime - startTime;
+        // get seconds
+        let seconds = Math.round(dif / 1000);
+        display.textContent = seconds + " seconds";
+    }
 });
