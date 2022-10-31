@@ -88,8 +88,8 @@ document.addEventListener("DOMContentLoaded", () => {
     u1.ricarica(20);
     u1.chiamnata(20);
     u1.numero404();
-
     u1.chiamnata(15);
+
     // u1.getNumeroChiamate();
 
     //     u1.chiamnata(53);
